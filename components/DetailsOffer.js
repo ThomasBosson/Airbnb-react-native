@@ -4,17 +4,19 @@ import { FontAwesome } from "@expo/vector-icons";
 import colors from "../assets/colors";
 const { input, bg, title } = colors;
 
-//
-const stars = (num) => {
+// display stars function
+// Ex : ratingValue = 4 -> 4* yellow and 1* grey
+const stars = (ratingValue) => {
   let stars = [];
   for (let i = 1; i <= 5; i++) {
-    if (num < i) {
+    if (ratingValue < i) {
       stars.push(
         <FontAwesome
           style={styles.star}
           name="star"
           size={15}
           color="#BBBBBB"
+          key={i}
         />
       );
     } else {
@@ -24,6 +26,7 @@ const stars = (num) => {
           name="star"
           size={15}
           color="#FFB100"
+          key={i}
         />
       );
     }
@@ -61,6 +64,9 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     marginVertical: 10,
+    borderBottomWidth: 1,
+    paddingBottom: 20,
+    borderBottomColor: input,
   },
   display: {
     flex: 1,

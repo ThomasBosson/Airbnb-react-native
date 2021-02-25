@@ -11,11 +11,6 @@ import {
   ImageBackground,
 } from "react-native";
 
-// Provides system information that remains constant throughout the lifetime of your app's install.
-import Constants from "expo-constants";
-console.log(Constants.statusBarHeight);
-console.log(Platform.OS);
-
 // Colors
 import colors from "../assets/colors";
 const { bg, input } = colors;

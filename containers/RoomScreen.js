@@ -22,6 +22,7 @@ export default function RoomScreen({ route }) {
   // State declaration
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(true);
+  const [displayFullText, setDisplayFullText] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {

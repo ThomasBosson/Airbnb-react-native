@@ -4,12 +4,10 @@ import { useState } from "react";
 import { useNavigation } from "@react-navigation/core";
 import {
   Text,
-  TextInput,
   View,
   StyleSheet,
   SafeAreaView,
   StatusBar,
-  Image,
   TouchableOpacity,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
@@ -102,7 +100,7 @@ export default function SignUpScreen({ setToken }) {
         </View>
 
         <View style={styles.view}>
-          <Text>{errorMessage}</Text>
+          <Text style={styles.error}>{errorMessage}</Text>
           <TouchableOpacity
             style={styles.btn}
             title="Sign up"
@@ -151,5 +149,9 @@ const styles = StyleSheet.create({
   },
   redirect: {
     color: title,
+  },
+  error: {
+    color: input,
+    marginBottom: 20,
   },
 });

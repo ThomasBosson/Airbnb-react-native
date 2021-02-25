@@ -96,7 +96,7 @@ export default function App() {
                         name="Home"
                         options={{
                           headerStyle: { backgroundColor: "#FFFFFF" },
-                          headerTitle: () => <Logo size={"small"} />,
+                          headerTitle: () => <Logo size="small" />,
                         }}
                       >
                         {() => <HomeScreen />}

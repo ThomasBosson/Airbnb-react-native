@@ -81,7 +81,7 @@ export default function SignInScreen({ setToken }) {
         </View>
 
         <View style={styles.view}>
-          <Text>{errorMessage}</Text>
+          <Text style={styles.error}>{errorMessage}</Text>
           <TouchableOpacity
             style={styles.btn}
             title="Sign in"
@@ -105,6 +105,7 @@ export default function SignInScreen({ setToken }) {
 const styles = StyleSheet.create({
   safeAreaView: {
     backgroundColor: bg,
+    flex: 1,
   },
   view: {
     width: "100%",
@@ -129,5 +130,9 @@ const styles = StyleSheet.create({
   },
   redirect: {
     color: title,
+  },
+  error: {
+    color: input,
+    marginBottom: 20,
   },
 });

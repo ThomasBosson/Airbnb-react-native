@@ -1,7 +1,7 @@
 const colors = {
   bg: "#FFFFFF",
   title: "#484848",
-  input: "#F22D5B",
+  input: "#e46868",
 };
 
 export default colors;
