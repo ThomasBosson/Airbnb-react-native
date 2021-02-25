@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import MapView from "react-native-maps";
+import * as Location from "expo-location";
 import axios from "axios";
 import {
   ActivityIndicator,
@@ -67,6 +69,24 @@ export default function RoomScreen({ route }) {
               />
             </View>
             <Text style={styles.description}>{data.description}</Text>
+            <MapView
+              style={styles.mapView}
+              initialRegion={{
+                latitude: data.location[1],
+                longitude: data.location[0],
+                latitudeDelta: 0.1,
+                longitudeDelta: 0.1,
+              }}
+              showsUserLocation={true}
+            >
+              <MapView.Marker
+                coordinate={{
+                  latitude: data.location[1],
+                  longitude: data.location[0],
+                }}
+                title={data.title}
+              />
+            </MapView>
           </ScrollView>
         </SafeAreaView>
       )}
@@ -85,7 +105,7 @@ const styles = StyleSheet.create({
   },
   priceBox: {
     position: "absolute",
-    bottom: 0,
+    top: 0,
   },
   infos: {
     marginHorizontal: 20,
@@ -94,5 +114,10 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     lineHeight: 20,
     marginBottom: 10,
+  },
+  mapView: {
+    height: 400,
+    width: "100%",
+    marginTop: 10,
   },
 });

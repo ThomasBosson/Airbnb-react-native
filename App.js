@@ -6,10 +6,12 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 // icons
 import { Ionicons } from "@expo/vector-icons";
+import { FontAwesome5 } from "@expo/vector-icons";
 
 // containers
 import HomeScreen from "./containers/HomeScreen";
 import RoomScreen from "./containers/RoomScreen";
+import AroundMeScreen from "./containers/AroundMeScreen";
 import ProfileScreen from "./containers/ProfileScreen";
 import SignInScreen from "./containers/SignInScreen";
 import SignUpScreen from "./containers/SignUpScreen";
@@ -81,6 +83,7 @@ export default function App() {
                   inactiveTintColor: "gray",
                 }}
               >
+                {/* Navigation HomeScreen, RoomScreen, ProfileScreen */}
                 <Tab.Screen
                   name="Home"
                   options={{
@@ -123,6 +126,36 @@ export default function App() {
                     </Stack.Navigator>
                   )}
                 </Tab.Screen>
+
+                {/* Navigation Around Me screen */}
+                <Tab.Screen
+                  name="Around me"
+                  options={{
+                    tabBarLabel: "Around me",
+                    tabBarIcon: ({ color, size }) => (
+                      <FontAwesome5
+                        name="map-marker-alt"
+                        size={size}
+                        color={color}
+                      />
+                    ),
+                  }}
+                >
+                  {() => (
+                    <Stack.Navigator screenOptions={{ headerShown: true }}>
+                      <Stack.Screen
+                        name="AroundMe"
+                        options={{
+                          headerTitle: () => <Logo size={"small"} />,
+                        }}
+                      >
+                        {(props) => <AroundMeScreen {...props} />}
+                      </Stack.Screen>
+                    </Stack.Navigator>
+                  )}
+                </Tab.Screen>
+
+                {/* Navigation Settings screen */}
                 <Tab.Screen
                   name="Settings"
                   options={{
