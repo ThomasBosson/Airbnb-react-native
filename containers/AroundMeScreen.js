@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import MapView from "react-native-maps";
 import * as Location from "expo-location";
+import { useNavigation } from "@react-navigation/core";
 import axios from "axios";
 import {
   ActivityIndicator,
@@ -21,36 +22,46 @@ const { bg, input, title } = colors;
 export default function RoomScreen({ route }) {
   // State declaration
   const [data, setData] = useState();
+  const [coords, setCoords] = useState();
   const [isLoading, setIsLoading] = useState(true);
-  const [errorMessage, setErrorMessage] = useState("");
+  const navigation = useNavigation();
 
-  // UseEffect declaration : authorization + get coords
   useEffect(() => {
-    try {
-      // Get user's permission using his data
-      const askPermission = async () => {
+    const askPermission = async () => {
+      try {
+        // Get user's permission using his location
         let { status } = await Location.requestPermissionsAsync();
+
+        // If user accept...
         if (status === "granted") {
-          // get rooms around user
-          const location = await Location.getCurrentPositionAsync();
-          let response = await axios.get(
+          // get, storage his location and display announces around him
+          let location = await Location.getCurrentPositionAsync({});
+          const obj = {
+            latitude: location.coords.latitude,
+            longitude: location.coords.longitude,
+          };
+          setCoords(obj);
+          const response = await axios.get(
             `https://express-airbnb-api.herokuapp.com/rooms/around?latitude=${location.coords.latitude}&longitude=${location.coords.longitude}`
           );
-        } else {
-          // get all rooms
-          let response = await axios.get(
-            `https://express-airbnb-api.herokuapp.com/rooms/around`
-          );
-        }
-        // Get user's coords (incoming)
+          setData(response.data);
 
-        setData();
-        setIsLoading(false);
-      };
-      askPermission();
-    } catch (error) {
-      alert("An error occurred");
-    }
+          // Else if user refuses...
+        } else {
+          // Get and display all announces
+          const response = await axios.get(
+            "https://express-airbnb-api.herokuapp.com/rooms/around"
+          );
+          setData(response.data);
+        }
+
+        // error application
+      } catch (error) {
+        alert("An error occured");
+      }
+      setIsLoading(false);
+    };
+    askPermission();
   }, []);
 
   return (
@@ -59,7 +70,35 @@ export default function RoomScreen({ route }) {
         <ActivityIndicator size="large" color={input} />
       ) : (
         <SafeAreaView style={styles.safeAreaView}>
-          <Text>Hello</Text>
+          <View>
+            <MapView
+              style={styles.mapView}
+              initialRegion={{
+                latitude: data[0].location[1],
+                longitude: data[0].location[0],
+                latitudeDelta: 0.1,
+                longitudeDelta: 0.1,
+              }}
+              showsUserLocation={true}
+            >
+              {data.map((user) => {
+                return (
+                  <MapView.Marker
+                    key={user._id}
+                    coordinate={{
+                      latitude: user.location[1],
+                      longitude: user.location[0],
+                    }}
+                    onPress={() =>
+                      navigation.navigate("room", {
+                        id: user._id,
+                      })
+                    }
+                  />
+                );
+              })}
+            </MapView>
+          </View>
         </SafeAreaView>
       )}
     </>
@@ -70,5 +109,9 @@ const styles = StyleSheet.create({
   safeAreaView: {
     flex: 1,
     backgroundColor: bg,
+  },
+  mapView: {
+    height: "100%",
+    width: "100%",
   },
 });
