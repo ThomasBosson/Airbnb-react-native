@@ -8,9 +8,6 @@ import {
   SafeAreaView,
   StyleSheet,
   View,
-  Image,
-  ScrollView,
-  Text,
 } from "react-native";
 
 // Colors
@@ -32,7 +29,7 @@ export default function RoomScreen({ route }) {
         // Get user's permission using his location
         let { status } = await Location.requestPermissionsAsync();
 
-        // If user accept...
+        // If user accepts...
         if (status === "granted") {
           // get, storage his location and display announces around him
           let location = await Location.getCurrentPositionAsync({});
@@ -46,7 +43,7 @@ export default function RoomScreen({ route }) {
           );
           setData(response.data);
 
-          // Else if user refuses...
+          // Else, if user refuses...
         } else {
           // Get and display all announces
           const response = await axios.get(

@@ -155,7 +155,7 @@ export default function App() {
                   )}
                 </Tab.Screen>
 
-                {/* Navigation Settings screen */}
+                {/* Navigation Profil screen */}
                 <Tab.Screen
                   name="Settings"
                   options={{
